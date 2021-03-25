@@ -121,6 +121,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static"),
+]
+
 # 有关redis的配置信息
 CACHES = {
     "default": {
