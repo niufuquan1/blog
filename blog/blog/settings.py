@@ -53,7 +53,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,"static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # 有关redis的配置信息
@@ -155,8 +155,8 @@ LOGGING = {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s"
         },
-        "simple":{
-            "format":"%(levelname)s %(module)s %(lineno)d %(message)s"
+        "simple": {
+            "format": "%(levelname)s %(module)s %(lineno)d %(message)s"
         }
     },
     "filters": {
@@ -194,3 +194,7 @@ LOGGING = {
         },
     },
 }
+
+# 替换系统的User，使用自定义User
+# 配置信息为:子应用名.模型类型
+AUTH_USER_MODEL = 'Users.User'
