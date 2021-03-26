@@ -1,9 +1,10 @@
 from django.urls import path
-from Users.views import RegisterView, ImageCodeView
+from Users.views import RegisterView, ImageCodeView, SmsCodeView
 
 urlpatterns = [
     path('register/',RegisterView.as_view(),name='register'),
     #图片验证码
     path('imagecode/',ImageCodeView.as_view(),name='imagecode'),
-
+    #短信验证码
+    path('smscode/',SmsCodeView.as_view(),name='smscode')
 ]
