@@ -8,17 +8,17 @@
     <!-- 网站标题 -->
     <title>文章详情</title>
     <!-- 引入bootstrap的css文件 -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <!--详情页面导入-->
     <script src="ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js"></script>
-    <link href="prism/prism.css" rel="stylesheet">
+    <link rel="stylesheet" href="prism/prism.css">
     <!--导入css-->
-    <link href="common/common.css" rel="stylesheet">
-    <link href="common/jquery.pagination.css" rel="stylesheet">
+    <link rel="stylesheet" href="common/common.css">
+    <link rel="stylesheet" href="common/jquery.pagination.css">
     <!-- 引入vuejs -->
-    <script src="js/vue-2.5.16.js" type="text/javascript"></script>
-    <script src="js/axios-0.18.0.min.js" type="text/javascript"></script>
-    <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/vue-2.5.16.js"></script>
+    <script type="text/javascript" src="js/axios-0.18.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
     <div class="container">
         <!-- 导航栏商标 -->
         <div>
-            <a class="navbar-brand" href="index.html">个人博客</a>
+            <a class="navbar-brand" href="../templates/index.html">个人博客</a>
         </div>
         <!-- 分类 -->
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -56,8 +56,8 @@
 
             <!-- 如果用户已经登录，则显示用户名下拉框 -->
             <li class="nav-item dropdown" v-if="is_login">
-                <a @click="show_menu_click" aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">admin</a>
-                <div aria-labelledby="navbarDropdown" class="dropdown-menu" style="display: block" v-show="show_menu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="show_menu_click">admin</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="display: block" v-show="show_menu">
                     <a class="dropdown-item" href="write_blog.html">写文章</a>
                     <a class="dropdown-item" href='./center.html'>个人信息</a>
                     <a class="dropdown-item" href='#'>退出登录</a>
@@ -96,14 +96,14 @@
                     <div>
 
                         <div class="django-ckeditor-widget" data-field-id="id_body" style="display: inline-block;">
-                            <textarea :data-config="data_config" cols="40" data-external-plugin-resources="[]" data-id="id_body" data-processed="0" data-type="ckeditortype" id="id_body" name="content" required rows="10">
+                            <textarea cols="40" id="id_body" name="content" rows="10" required data-processed="0" :data-config="data_config" data-external-plugin-resources="[]" data-id="id_body" data-type="ckeditortype">
 
                             </textarea>
                         </div>
                     </div>
                 </div>
                     <!-- 提交按钮 -->
-                    <button class="btn btn-primary " type="submit">发送</button>
+                    <button type="submit" class="btn btn-primary ">发送</button>
                 </form>
             </div>
             <br>
@@ -151,13 +151,13 @@
                     </div>
                 </div>
                 <div class="pagenation" style="text-align: center">
-                    <div class="page" id="pagination"></div>
+                    <div id="pagination" class="page"></div>
                 </div>
             </div> 
 
         </div>
         <!-- 推荐 -->
-        <div class="col-3 mt-4" class="sidebar" id="sidebar">
+        <div class="col-3 mt-4" id="sidebar" class="sidebar">
             <div class="sidebar__inner">
                     <h4><strong>推荐</strong></h4>
                     <hr>
@@ -181,13 +181,13 @@
 </div>
 
 <!--ckeditor-->
-<script data-ckeditor-basepath="ckeditor/ckeditor/" id="ckeditor-init-script" src="ckeditor/ckeditor-init.js" type="text/javascript"></script>
-<script src="ckeditor/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script type="text/javascript" src="ckeditor/ckeditor-init.js" data-ckeditor-basepath="ckeditor/ckeditor/" id="ckeditor-init-script"></script>
+<script type="text/javascript" src="ckeditor/ckeditor/ckeditor.js"></script>
 <!-- 引入js -->
-<script src="js/host.js" type="text/javascript"></script>
-<script src="js/common.js" type="text/javascript"></script>
-<script src="js/detail.js" type="text/javascript"></script>
-<script src="js/jquery.pagination.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/host.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/detail.js"></script>
+<script type="text/javascript" src="js/jquery.pagination.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $('#pagination').pagination({
