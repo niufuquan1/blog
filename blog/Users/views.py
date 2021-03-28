@@ -1,5 +1,6 @@
 import re
 
+from django.contrib.auth import logout
 from django.db import DatabaseError
 from django.shortcuts import render, redirect
 
@@ -217,5 +218,22 @@ class LoginView(View):
             request.session.set_expiry(0)
             response.set_cookie('is_login', True)
             response.set_cookie('username', user.username, max_age=14 * 24 * 3600)
+
+        return response
+
+class LogoutView(View):
+    def get(self,request):
+        '''
+        1、session数据删除
+        2、删除部分cookie数据
+        3、跳转到首页
+        :param request:
+        :return:
+        '''
+        logout(request)
+
+        response = redirect(reverse('home:index'))
+
+        response.delete_cookie('is_login')
 
         return response
