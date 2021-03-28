@@ -206,7 +206,12 @@ class LoginView(View):
         from django.contrib.auth import login
         login(request, user)
 
-        response = redirect(reverse('home:index'))
+        # 根据next进行页面跳转
+        next_page = request.GET.get('next')
+        if next_page:
+            response = redirect(next_page)
+        else:
+            response = redirect(reverse('home:index'))
 
         if remember == 'on':
             # 默认记住两周
@@ -221,8 +226,9 @@ class LoginView(View):
 
         return response
 
+
 class LogoutView(View):
-    def get(self,request):
+    def get(self, request):
         '''
         1、session数据删除
         2、删除部分cookie数据
@@ -238,7 +244,74 @@ class LogoutView(View):
 
         return response
 
+
 class ForgetPasswordView(View):
 
-    def get(self,request):
-        return render(request,'forget_password.html')
+    def get(self, request):
+        return render(request, 'forget_password.html')
+
+    def post(self, request):
+        '''
+        1、接收数据
+        2、验证数据
+            2.1 判断数据是否齐全
+            2.2 判断数据是否规范
+            2.3 短信验证码
+        3、根据手机号进行用户信息的查询
+        4、如果手机号查出来用户，则修改；没有则进行新用户的创建
+        5、跳转到登录页面
+        6、返回响应
+        :param request:
+        :return:
+        '''
+        mobile = request.POST.get('mobile')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        smscode = request.POST.get('sms_code')
+
+        if not all([mobile, password, password2, smscode]):
+            return HttpResponseBadRequest('参数不全，请补齐')
+
+        if not re.match(r'^1[3-9]\d{9}$', mobile):
+            return HttpResponseBadRequest('手机号不符合规则')
+
+        if not re.match(r'^[0-9a-zA-Z]{8,20}$', password):
+            return HttpResponseBadRequest('密码不符合规则')
+
+        if password != password2:
+            return HttpResponseBadRequest('两次密码输入不一致')
+
+        redis_conn = get_redis_connection('default')
+        redis_sms_code = redis_conn.get('sms:%s' % mobile)
+
+        if redis_sms_code is None:
+            return HttpResponseBadRequest('短信验证码已经过期')
+
+        if redis_sms_code.decode() != smscode:
+            return HttpResponseBadRequest('短信验证码错误')
+
+        try:
+            user = User.objects.get(mobile=mobile)
+        except User.DoesNotExist:
+            try:
+                User.objects.create_user(username=mobile, mobile=mobile, password=password)
+            except Exception as e:
+                logger.error(e)
+                return HttpResponseBadRequest('用户创建失败！')
+        else:
+            user.set_password(password)
+            user.save()
+
+        response = redirect(reverse('Users:login'))
+
+        return response
+
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+# 如果用户未登录，进行默认跳转。默认跳转链接为：accounts/login/?next=xxx
+class UserCenterView(LoginRequiredMixin, View):
+    def get(self, request):
+        pass
+        return render(request, 'center.html')
