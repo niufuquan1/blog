@@ -237,3 +237,8 @@ class LogoutView(View):
         response.delete_cookie('is_login')
 
         return response
+
+class ForgetPasswordView(View):
+
+    def get(self,request):
+        return render(request,'forget_password.html')
