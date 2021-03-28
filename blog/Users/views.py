@@ -313,5 +313,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # 如果用户未登录，进行默认跳转。默认跳转链接为：accounts/login/?next=xxx
 class UserCenterView(LoginRequiredMixin, View):
     def get(self, request):
-        pass
-        return render(request, 'center.html')
+        user = request.user
+        context = {
+            'username': user.username,
+            'mobile': user.mobile,
+            'avatar': user.avatar.url if user.avatar else None,
+            'user_desc': user.user_desc
+        }
+        return render(request, 'center.html', context=context)

@@ -59,12 +59,17 @@
                     <!-- username -->
                     <div class="form-group col-md-4">
                         <label for="username">用户名</label>
-                        <input type="text" class="form-control" id="username" name="username" value="admin">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ username }}">
                     </div>
                     <!--<br><h5 class="col-md-4">暂无头像</h5><br>-->
                     <br>
                     <div class="col-md-4">头像</div>
-                    <img src="../static/img/mei.png" style="max-width: 20%;" class="col-md-4"><br>
+                    {% if avatar%}
+                        <img src="{{ avatar }}" style="max-width: 20%;" class="col-md-4"><br>
+                    {% else %}
+                        <img alt="暂无头像" src="" style="max-width: 20%;" class="col-md-4"><br>
+                    {% endif %}
+
                     <!-- avatar -->
                     <div class="form-group col-md-4">
                         <label for="avatar">上传头像</label>
@@ -74,13 +79,13 @@
                     <!-- phone -->
                     <div class="form-group col-md-4">
                         <label for="phone">电话</label>
-                        <input type="text" class="form-control" disabled="disabled" id="phone" name="phone" value="">
+                        <input type="text" class="form-control" disabled="disabled" id="phone" name="phone" value="{{ mobile }}">
                     </div>
                     <!-- desc -->
                     <div class="form-group col-md-4">
                         <label for="desc">简介</label>
                         <!-- 文本区域 -->
-                        <textarea type="text" class="form-control" id="desc" name="desc" rows="12"></textarea>
+                        <textarea type="text" class="form-control" id="desc" name="desc" rows="12">{{ user_desc }}</textarea>
                     </div>
                     <!-- 提交按钮 -->
                     <button type="submit" class="btn btn-primary" style="margin-left: 12px">修改</button>
