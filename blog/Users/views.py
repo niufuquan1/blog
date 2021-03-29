@@ -10,6 +10,7 @@ from django.views import View
 from django.http import HttpResponseBadRequest, HttpResponse, JsonResponse
 
 from Users.models import User
+from home.models import ArticleCategory
 from libs.captcha.captcha import captcha
 from django_redis import get_redis_connection
 from utils.response_code import RETCODE
@@ -353,6 +354,15 @@ class UserCenterView(LoginRequiredMixin, View):
 
         return response
 
-class WriteBlogView(View):
+class WriteBlogView(LoginRequiredMixin,View):
+
     def get(self,request):
-        return render(request,'write_blog.html')
+        #查询所有分类模型
+        categories = ArticleCategory.objects.all()
+
+        context = {
+            'categories':categories
+        }
+
+        return render(request,'write_blog.html',context=context)
+
