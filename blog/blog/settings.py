@@ -201,3 +201,9 @@ AUTH_USER_MODEL = 'Users.User'
 
 #修改系统未登录状态的跳转链接
 LOGIN_URL = '/login/'
+
+#设置图片上传的路径
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+#设置图片访问的统一路由
+MEDIA_URL = '/media/'

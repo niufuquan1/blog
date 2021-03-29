@@ -57,6 +57,7 @@
                 <br>
                 <form method="post" enctype="multipart/form-data">
                     <!-- username -->
+                    {% csrf_token %}
                     <div class="form-group col-md-4">
                         <label for="username">用户名</label>
                         <input type="text" class="form-control" id="username" name="username" value="{{ username }}">
